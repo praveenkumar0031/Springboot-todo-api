@@ -1,6 +1,9 @@
 package dev.projects.HelloWorld.models;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -20,9 +23,6 @@ public class Todo {
     @NotBlank(message = "Description cannot be empty")
     String description;
     boolean done;
-    @ManyToOne
-    @JoinColumn(name = "project_id")
-    private Project project;
 
 
 }
