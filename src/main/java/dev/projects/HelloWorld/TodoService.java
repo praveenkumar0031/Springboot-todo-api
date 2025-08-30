@@ -1,5 +1,6 @@
 package dev.projects.HelloWorld;
 
+import dev.projects.HelloWorld.models.Project;
 import dev.projects.HelloWorld.models.Todo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,13 +17,23 @@ import java.util.Optional;
 public class TodoService {
     @Autowired
     private TodoRepository todoRepository;
+    @Autowired
+    private ProjectRepository projectRepo;
+
 
     public TodoService(TodoRepository todoRepository) {
         this.todoRepository = todoRepository;
     }
 
-    public Todo createTodo(Todo todo) {
-        return (todoRepository.save(todo)); //create or update
+    public Todo createTodo(Long projectId, Todo todo) {
+        Project project = projectRepo.findById(projectId)
+                .orElseThrow(() -> new RuntimeException("Project not found"));
+        todo.setProject(project);
+        return todoRepository.save(todo);
+    }
+
+    public List<Todo> getTodosByProject(Long projectId) {
+        return todoRepository.findByProjectId(projectId);
     }
 
     public Todo getTodo(long id) {

@@ -11,9 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/api/todo") //grouping
+@RequestMapping("/api/projects/{projectId}/todo") //grouping
 public class TodoController {
     @Autowired
     private TodoService todoService;
@@ -38,14 +40,16 @@ public class TodoController {
     }
     //path variable
     @GetMapping("/get/all")
-    ResponseEntity<List<Todo>> getTodos(){
-        return new ResponseEntity<List<Todo>>(todoService.getTodos(),HttpStatus.OK);
+    ResponseEntity<List<Todo>> getTodos(@PathVariable Long projectId) {
+        return new ResponseEntity<List<Todo>>(todoService.getTodosByProject(projectId),HttpStatus.OK);
     }
     //Request param
-    @PostMapping("/create")
-    ResponseEntity<Todo> createTodo(@RequestBody  Todo todo){
 
-            return new ResponseEntity<>(todoService.createTodo(todo), HttpStatus.CREATED);
+    @PostMapping("/create")
+
+    ResponseEntity<Todo> createTodo(@PathVariable Long projectId,  @RequestBody  Todo todo){
+
+            return new ResponseEntity<>(todoService.createTodo(projectId,todo), HttpStatus.CREATED);
 
     }
     @PutMapping("/update")
