@@ -1,0 +1,4 @@
+DATASOURCE_URL=jdbc:mysql:/"Your url"
+DATASOURCE_USER="user_name"
+DATASOURCE_PASSWORD="Your_Password"
+FRONTEND_URL="Your_Frontend_url"
