@@ -23,7 +23,7 @@ public class TodoController {
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "Todo retrived sucessfully "),
-            @ApiResponse(responseCode = "400",description = "Todo not found")
+            @ApiResponse(responseCode = "404",description = "Todo not found")
     })
     @GetMapping("/get")
     ResponseEntity <Todo> getTodoById(@RequestParam("todoId") long id) {

@@ -1,4 +1,4 @@
-package dev.projects.HelloWorld;
+package dev.projects.HelloWorld.Repository;
 
 import dev.projects.HelloWorld.models.Todo;
 import org.springframework.data.jpa.repository.JpaRepository;
