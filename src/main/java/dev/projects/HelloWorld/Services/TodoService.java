@@ -1,4 +1,4 @@
-package dev.projects.HelloWorld;
+package dev.projects.HelloWorld.Services;
 
 import dev.projects.HelloWorld.Repository.TodoRepository;
 import dev.projects.HelloWorld.models.Todo;

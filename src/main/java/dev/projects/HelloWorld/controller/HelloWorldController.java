@@ -1,4 +1,4 @@
-package dev.projects.HelloWorld;
+package dev.projects.HelloWorld.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +9,5 @@ public class HelloWorldController {
     String pk() {
 
         return "its praveen";
-
     }
 }
