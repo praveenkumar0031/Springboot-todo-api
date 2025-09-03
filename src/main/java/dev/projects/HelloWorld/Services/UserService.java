@@ -15,7 +15,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepo;
 
-    public User createTodo(User user) {
+    public User createUser(User user) {
         return userRepo.save(user); //create or update
     }
 
