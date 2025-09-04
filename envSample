@@ -2,3 +2,11 @@ DATASOURCE_URL=jdbc:mysql:/"Your url"
 DATASOURCE_USER="user_name"
 DATASOURCE_PASSWORD="Your_Password"
 FRONTEND_URL="Your_Frontend_url"
+SECRET_CODE="keep it secret shhh... keep it secret shhh..."
+
+--bash_cmd--
+$env:DATASOURCE_URL=jdbc:mysql:/"Your url"
+$env:"your env content"
+./mvnw package
+
+--without ""--

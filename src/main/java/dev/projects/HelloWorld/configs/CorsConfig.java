@@ -1,4 +1,4 @@
-package dev.projects.HelloWorld;
+package dev.projects.HelloWorld.configs;
 
 import org.springframework.beans.factory.annotation.Value;
 

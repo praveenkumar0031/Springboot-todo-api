@@ -23,4 +23,6 @@ public class User {
     String email;
     @NotBlank
     String password;
+    @NotBlank
+    String favourite;
 }
