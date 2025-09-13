@@ -1,27 +1,32 @@
-# Stage 1: Build with Maven Wrapper
-FROM eclipse-temurin:21 AS build
+# syntax=docker/dockerfile:1
 
+# Stage 1: Build with Maven Wrapper
+FROM eclipse-temurin:21-jdk AS build
 WORKDIR /app
 
-# Copy the Maven wrapper and config first
+# Copy wrapper and pom first for better caching
 COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
 
-# Download dependencies (helps with caching)
-RUN ./mvnw dependency:go-offline
+# Make wrapper executable and warm up the cache
+RUN chmod +x mvnw && ./mvnw -B -q -DskipTests dependency:go-offline
 
-# Copy source code
+# Copy sources and build
 COPY src ./src
+RUN ./mvnw -B  clean package -DskipTests
 
-# Build the Spring Boot app
-RUN ./mvnw clean package -DskipTests
-
-# Stage 2: Run the app with lightweight JDK
-FROM openjdk:17-jdk-slim
-
+# Stage 2: Run the app with lightweight JRE
+FROM eclipse-temurin:21-jre
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
 
+# Optional: run as non-root
+RUN useradd -ms /bin/sh spring
+USER spring
+
+COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+
+ENV JAVA_OPTS="-XX:MaxRAMPercentage=75 -Djava.security.egd=file:/dev/./urandom"
+ENTRYPOINT ["java", "-XX:MaxRAMPercentage=75", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar"]
+

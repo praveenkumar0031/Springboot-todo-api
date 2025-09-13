@@ -5,6 +5,7 @@ package dev.projects.HelloWorld.Services;
 import dev.projects.HelloWorld.Repository.UserRepository;
 import dev.projects.HelloWorld.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 
@@ -14,7 +15,11 @@ import org.springframework.stereotype.Service;
 public class UserService {
     @Autowired
     private UserRepository userRepo;
-
+    public User getCurrentUser() {
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepo.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
     public User createUser(User user) {
         return userRepo.save(user); //create or update
     }
